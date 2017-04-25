@@ -26,6 +26,8 @@ Each well-formed `movie` object in the `movies` array must have the following ke
 | `title`  | The title of the movie.             |
 | `year`   | The year of the movie's release.    |
 
+
+
 ## Bonus
 
 The web application should also allow the user to view a movie's full plot by clicking on the "Plot Synopsis".

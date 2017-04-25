@@ -17,7 +17,9 @@
         'data-tooltip': movie.title
       });
 
-      $title.tooltip({ delay: 50 }).text(movie.title);
+      $title.tooltip({
+        delay: 50
+      }).text(movie.title);
 
       const $poster = $('<img>').addClass('poster');
 
@@ -33,13 +35,13 @@
       const $plot = $('<a>');
 
       $plot.addClass('waves-effect waves-light btn modal-trigger');
-      $plot.attr('href', `#${movie.id}`);
+      $plot.attr('href', `#${movie.imdbid}`);
       $plot.text('Plot Synopsis');
 
       $action.append($plot);
       $card.append($action);
 
-      const $modal = $('<div>').addClass('modal').attr('id', movie.id);
+      const $modal = $('<div>').addClass('modal').attr('id', movie.imdbid);
       const $modalContent = $('<div>').addClass('modal-content');
       const $modalHeader = $('<h4>').text(movie.title);
       const $movieYear = $('<h6>').text(`Released in ${movie.year}`);
@@ -55,6 +57,20 @@
       $('.modal-trigger').leanModal();
     }
   };
+  var button = $(".btn-large"); //setting of variable for trigger
 
-  // ADD YOUR CODE HERE
+  button.click(function(event) { //trigger for event is click of button
+    event.preventDefault(); //ensure that the page doesn't reload upon "resubmit"
+    var cap = $("#search").val(); //create capsul to store data ref the class and adding validator function.
+    $.getJSON(`http://omdbapi.com/?t=${cap}`).done(function(fun) { //calling on api address to retrieve data and enter it in cap.
+      var movie = {}; //new object made from api call
+      for (var key in fun) { //forIn loop to convert object into array
+        movie[key.toLowerCase()] = fun[key]; //setting movie[key] to fun[key] and converting to lowerCase to process into array
+      }
+      movies.push(movie); //push movie array into movies
+
+      renderMovies();
+    });
+  });
+
 })();
